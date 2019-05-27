@@ -11,6 +11,7 @@ public class Function {
 
     /**
      * Konstruktor fuer Function
+     *
      * @param i INTEGER Untere-Grenze
      * @param j INTEGER Obere.Grenze
      */
@@ -35,13 +36,24 @@ public class Function {
     /**
      * applyAndPrint ruft die Uebergebene Funktion fuer alle Werte zwischen i und j auf und gibt diese ueber die Konsole
      * aus.
+     *
      * @param myFunction Auszufuehrende Funktion
-     * @param i Untere-Grenze
-     * @param j Obere-Grenze
+     * @param i          Untere-Grenze
+     * @param j          Obere-Grenze
      */
     private void applyAndPrint(MyFunction myFunction, int i, int j) {
         for (int x = i; x <= j; x++) {
             System.out.println(x + ": " + myFunction.apply(x));
         }
+    }
+
+    public void xFakultaetObjektMethodenReferenz() {
+        MyFunction xFakultaetTopLevel = FakultaetKlasse::FakultaetBerechnen;
+        applyAndPrint(xFakultaetTopLevel, this.i, this.j);
+    }
+
+    public void xFakultaetStaticMethodenReferenz(){
+        MyFunction xFakultaetNestedClass = FakultaetNestedClass::FakultaetBerechnen;
+        applyAndPrint(xFakultaetNestedClass, this.i, this.j);
     }
 }
