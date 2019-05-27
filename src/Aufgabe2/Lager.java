@@ -1,5 +1,7 @@
 package Aufgabe2;
 
+import java.util.function.BiPredicate;
+
 /**
  * Die Klasse Lager gibt die Möglichkeit, Artikel zu speichern und zu verwalten.
  *
@@ -9,7 +11,6 @@ package Aufgabe2;
 public class Lager {
 
     private Artikel[] lager;
-    private Artikel[] lagerNew;
     private int zeiger;
     private String lagerort;
 
@@ -127,11 +128,12 @@ public class Lager {
      */
     public void lagerErweitern(int groesse) {
         Validator.check(groesse <= lager.length, ERROR_NEUE_LAGER_GROESSE);
-        lagerNew = new Artikel[groesse];
+        Artikel[] lagertmp;
+        lagertmp = new Artikel[groesse];
         for (int i = 0; i < zeiger; i++) {
-            lagerNew[i] = lager[i];
+            lagertmp[i] = lager[i];
         }
-        lager = lagerNew;
+        lager = lagertmp;
     }
 
     /**
@@ -179,5 +181,40 @@ public class Lager {
             gesamtwert += lager[i].getArtikelPreis() * lager[i].getAnzahl();
         }
         return gesamtwert;
+    }
+
+    //<------------------- HIER FÄNGT UEBUNG 18 AN (KANN SPÄTER ENTFERNT WERDEN --------------------------------------->
+
+    private Artikel[] getSorted(BiPredicate<Artikel, Artikel> suchKriterium) {
+        Artikel[] lagerKopie = lager.clone();
+
+        sort(suchKriterium, lagerKopie);
+
+        return lagerKopie;
+    }
+
+    private void sort(BiPredicate<Artikel, Artikel> suchKriterium, Artikel[] tmp) {
+        for (int i = tmp.length; i > 0; i--) {
+
+            for (int j = 0; j < tmp.length - 1; j++) {
+                if (suchKriterium.test(tmp[i], tmp[j])) {
+                    swap(i, j, tmp);
+                }
+            }
+        }
+    }
+
+    /**
+     * Funktion zum Tauschen der Position
+     *
+     * @param i     Position des alten Artikels
+     * @param j     Position des neuen Artikels
+     * @param lager Das aktuelle Lager
+     */
+    private void swap(int i, int j, Artikel[] lager) {
+        Artikel tmp = lager[i];
+        lager[i] = lager[j];
+        lager[j] = tmp;
+
     }
 }
