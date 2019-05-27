@@ -3,8 +3,8 @@ package Aufgabe2;
 /**
  * Die Klasse Artikel verwaltet Informationen ueber einen Artikel.
  *
- * @author Jan Ehrhardt / Luca Schneider
- * @version 22.01.2019
+ * @author Jan Ehrhardt / Aaron Betzholz
+ * @version 27.05.2019
  */
 public class Artikel{
     private int artikelNummer;
@@ -12,13 +12,21 @@ public class Artikel{
     private int artikelAnzahl;
     private double artikelPreis;
 
-    public Artikel(){}
+    private static final String ERROR_ARTIKELNR_UNGUELTIG = "Artikelnummer muss eine 4-stellige positive Zahl sein!";
+    private static final String ERROR_ARTIKELBEZ_LEER = "Artikel Bezeichnung darf nicht leer sein!";
+    private static final String ERROR_ARTIKELANZ_NEGATIV = "Anzahl der Artikel darf nicht negativ sein1";
+    private static final String ERROR_ARTIKELPREIS_NULL = "Der Preis des Artikels muss groesser 0 sein!";
+    private static final String ERROR_NEGATIVER_ZUGANG = "Es kann kein negativer Zugang gebucht werden!";
+    private static final String ERROR_NEGATIVER_ABGANG = "Es kann kein negativer Abgang gebucht werden!";
+    private static final String ERROR_KEIN_BESTAND = "Es ist kein Bestand des Artikels vorhanden, es kann also keine Abgang gebucht werden!";
+    private static final String ERROR_ZU_HOHER_ABGANG = "Es können nicht mehr Artikel abgehen, als existieren!";
+
     
     public Artikel(int artikelNummer, String artikelBezeichnung, double artikelPreis, int artikelAnzahl){
-        checkArtNr(artikelNummer);
-        checkArtBez(artikelBezeichnung);
-        checkArtAnz(artikelAnzahl);
-        checkPreis(artikelPreis);
+        Validator.check(artikelNummer >= 10000 || artikelNummer <= 999, ERROR_ARTIKELNR_UNGUELTIG);
+        Validator.check(artikelBezeichnung.isEmpty(), ERROR_ARTIKELBEZ_LEER);
+        Validator.check(artikelAnzahl <= 0, ERROR_ARTIKELANZ_NEGATIV);
+        Validator.check(artikelPreis <= 0, ERROR_ARTIKELPREIS_NULL);
         this.artikelNummer = artikelNummer;
         this.artikelBezeichnung = artikelBezeichnung;
         this.artikelAnzahl = artikelAnzahl;
@@ -27,27 +35,6 @@ public class Artikel{
     
     public Artikel(int artikelNummer, String artikelBezeichnung, double artikelPreis){
         this(artikelNummer, artikelBezeichnung, artikelPreis, 0);
-    }
-        
-    private static void check(boolean bedingung, String msg){
-        if (!bedingung)
-            throw new IllegalArgumentException(msg);
-    }
-
-    private static void checkArtNr(int artikelNummer){
-     check(artikelNummer >=1000 && artikelNummer <= 9999, "Artikelnummer muss eine 4-stellige Zahl sein!");
-    }
-
-    private static void checkArtBez(String artikelBezeichnung){
-        check(artikelBezeichnung != null && !artikelBezeichnung.trim().isEmpty(), "Artikelbezeichnung darf nicht leer sein!");
-    }
-    
-    private static void checkArtAnz(int artikelAnzahl){
-        check(artikelAnzahl >= 0, "Anzahl der Artikel darf nicht negativ sein!");
-    }
-
-    private void checkPreis(double artikelPreis){
-        check(artikelPreis > 0, "Der Preis des Artikels muss größer 0 sein!");
     }
     
     public int getNummer(){
@@ -67,29 +54,29 @@ public class Artikel{
     }
 
     public void setAnzahl(int artikelAnzahl){
-        checkArtAnz(artikelAnzahl);
+        Validator.check(artikelAnzahl <= 0, ERROR_ARTIKELANZ_NEGATIV);
         this.artikelAnzahl = artikelAnzahl;
     }
 
     public void setBezeichnung(String artikelBezeichnung){
-        checkArtBez(artikelBezeichnung);
+        Validator.check(artikelBezeichnung.isEmpty(), ERROR_ARTIKELBEZ_LEER);
         this.artikelBezeichnung = artikelBezeichnung;
     }
     
     public void setPreis(double artikelPreis){
-        checkPreis(artikelPreis);
+        Validator.check(artikelPreis <= 0, ERROR_ARTIKELPREIS_NULL);
         this.artikelPreis = artikelPreis;
     }
 
     public void bucheZugang(int Anzahl){
-        check(Anzahl > 0, "Es kann kein negativer Zugang gebucht werden!");
+        Validator.check(Anzahl <= 0, ERROR_NEGATIVER_ZUGANG);
         artikelAnzahl = artikelAnzahl + Anzahl;
     }
 
     public void bucheAbgang(int Anzahl){
-        check(artikelAnzahl > 0, "Es ist kein Bestand des Artikels vorhanden, es kann also keine Abgang gebucht werden!");
-        check(Anzahl > 0, "Es kann kein negativer Abgang gebucht werden!");
-        check(artikelAnzahl >= Anzahl, "Es können nicht mehr Artikel abgehen, als existieren!");
+        Validator.check(Anzahl <= 0, ERROR_NEGATIVER_ABGANG);
+        Validator.check(artikelAnzahl <= 0, ERROR_KEIN_BESTAND);
+        Validator.check(artikelAnzahl < Anzahl, ERROR_ZU_HOHER_ABGANG);
         artikelAnzahl = artikelAnzahl - Anzahl;
     }
 
