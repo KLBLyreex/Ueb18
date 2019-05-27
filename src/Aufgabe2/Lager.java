@@ -215,6 +215,23 @@ public class Lager {
         Artikel tmp = lager[i];
         lager[i] = lager[j];
         lager[j] = tmp;
+    }
 
+    /**
+     * ->>>>> KANN MAN DAS SO UMSETZTEN?
+     * @param filterKriterium
+     * @param kriterium
+     * @return
+     */
+    Artikel[] filter (BiPredicate<Artikel, Artikel> filterKriterium, Artikel kriterium){
+        Artikel[] tmp = new Artikel[lager.length];
+        int counter = 0;
+        for(int i=0; i<=lager.length; i++){
+            if (filterKriterium.test(lager[i], kriterium)){
+                tmp[counter] = lager[i];
+                counter++;
+            }
+        }
+        return tmp;
     }
 }
