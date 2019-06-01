@@ -234,6 +234,10 @@ public class Lager {
         }
     }
 
+    void applyToSomeArticles (Consumer<Artikel> input){
+
+    }
+
     BiPredicate<Artikel, Artikel> sortKategorie = (t, u) -> {
         int compare = t.getArtikelKategorie().compareToIgnoreCase(u.getArtikelKategorie());
         if (compare < 0){
