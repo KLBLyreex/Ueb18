@@ -9,6 +9,7 @@ package Aufgabe2;
 public class Artikel{
     private int artikelNummer;
     private String artikelBezeichnung;
+    private String artikelKategorie;
     private int artikelAnzahl;
     private double artikelPreis;
 
@@ -22,23 +23,29 @@ public class Artikel{
     private static final String ERROR_ZU_HOHER_ABGANG = "Es können nicht mehr Artikel abgehen, als existieren!";
 
     
-    public Artikel(int artikelNummer, String artikelBezeichnung, double artikelPreis, int artikelAnzahl){
+    public Artikel(int artikelNummer, String artikelBezeichnung, String artikelKategorie, double artikelPreis, int artikelAnzahl){
         Validator.check(artikelNummer >= 10000 || artikelNummer <= 999, ERROR_ARTIKELNR_UNGUELTIG);
-        Validator.check(artikelBezeichnung.isEmpty(), ERROR_ARTIKELBEZ_LEER);
+        Validator.check(artikelBezeichnung.trim().isEmpty(), ERROR_ARTIKELBEZ_LEER);
+        Validator.check(artikelKategorie.trim().isEmpty(), ERROR_ARTIKELBEZ_LEER);
         Validator.check(artikelAnzahl <= 0, ERROR_ARTIKELANZ_NEGATIV);
         Validator.check(artikelPreis <= 0, ERROR_ARTIKELPREIS_NULL);
         this.artikelNummer = artikelNummer;
         this.artikelBezeichnung = artikelBezeichnung;
+        this.artikelKategorie = artikelKategorie;
         this.artikelAnzahl = artikelAnzahl;
         this.artikelPreis = artikelPreis;
     }
     
-    public Artikel(int artikelNummer, String artikelBezeichnung, double artikelPreis){
-        this(artikelNummer, artikelBezeichnung, artikelPreis, 0);
+    public Artikel(int artikelNummer, String artikelBezeichnung, String artikelKategorie, double artikelPreis){
+        this(artikelNummer, artikelBezeichnung, artikelKategorie, artikelPreis, 0);
     }
     
     public int getNummer(){
         return artikelNummer;
+    }
+
+    public String getArtikelKategorie() {
+        return artikelKategorie;
     }
 
     public String getBeschreibung(){

@@ -1,5 +1,7 @@
 package Aufgabe2;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.BiPredicate;
 
 /**
@@ -219,19 +221,47 @@ public class Lager {
 
     /**
      * ->>>>> KANN MAN DAS SO UMSETZTEN?
-     * @param filterKriterium
-     * @param kriterium
+     * @param filter
      * @return
      */
-    Artikel[] filter (BiPredicate<Artikel, Artikel> filterKriterium, Artikel kriterium){
-        Artikel[] tmp = new Artikel[lager.length];
-        int counter = 0;
-        for(int i=0; i<=lager.length; i++){
-            if (filterKriterium.test(lager[i], kriterium)){
-                tmp[counter] = lager[i];
-                counter++;
-            }
-        }
-        return tmp;
+    Artikel[] filter (Function <Artikel[], Artikel[]> filter){
+        return filter.apply(lager);
     }
+
+    void applyToArticles (Consumer<Artikel> input){
+        for (int i=0; i<= lager.length; i++){
+            input.accept(lager[i]);
+        }
+    }
+
+    BiPredicate<Artikel, Artikel> sortKategorie = (t, u) -> {
+        int compare = t.getArtikelKategorie().compareToIgnoreCase(u.getArtikelKategorie());
+        if (compare < 0){
+            return false;
+        }else{
+            return true;
+        }
+    };
+
+    BiPredicate<Artikel, Artikel> sortBestand = (t, u) -> {
+        if (t.getAnzahl() < u.getAnzahl()){
+            return false;
+        }else{
+            return true;
+        }
+    };
+
+    BiPredicate<Artikel, Artikel> sortPreis = (t, u) -> {
+        if (t.getArtikelPreis() < u.getArtikelPreis()){
+            return false;
+        }else{
+            return true;
+        }
+    };
+
+    Consumer<Artikel> saleTen = t -> t.setPreis(t.getArtikelPreis() + (t.getArtikelPreis() * 0.1));
+
+    Consumer<Artikel> suffixAngebot = t -> t.setBezeichnung("(Sonderangebot)" + t.getBeschreibung());
+
+    Consumer<Artikel> saleAndSufffix = t -> saleTen.andThen(suffixAngebot);
 }
