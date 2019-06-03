@@ -1,8 +1,10 @@
 package Aufgabe2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 /**
  * Die Klasse Lager gibt die Möglichkeit, Artikel zu speichern und zu verwalten.
@@ -219,58 +221,71 @@ public class Lager {
         lager[j] = tmp;
     }
 
-    /**
-     * ->>>>> KANN MAN DAS SO UMSETZTEN?
-     * @param filter
-     * @return
-     */
-    Artikel[] filter (Function <Artikel[], Artikel[]> filter){
-        return filter.apply(lager);
+
+    public List<Artikel> filter(Predicate<Artikel> filterKrit)
+    {
+        List<Artikel> result = new ArrayList<Artikel>();
+
+        for (int i=0; i<lager.length; i++)
+        {
+            if ( filterKrit.test(lager[i]) )
+            {
+                result.add(lager[i]);
+            }
+        }
+        return result;
     }
 
-    void applyToArticles (Consumer<Artikel> input){
-        for (int i=0; i<= lager.length; i++){
+    void applyToArticles(Consumer<Artikel> input) {
+        for (int i = 0; i <= lager.length; i++) {
             input.accept(lager[i]);
         }
     }
 
-    void applyToSomeArticles (Consumer<Artikel> input, BiPredicate<Artikel, Artikel> filter){
-        for (int i=0; i<= lager.length; i++){
-            if (filter.test(lager[i], t)) {
-                input.accept(lager[i]);
-            }
+    public void applyToSomeArticles(Predicate<Artikel> f, Consumer<Artikel> c)
+    {
+        for ( Artikel a : filter(f) )
+        {
+            c.accept(a);
         }
     }
 
-    Artikel[] getArticles (){
+    public Artikel[] getArticles(Predicate<Artikel> f, BiPredicate<Artikel, Artikel> c)
+    {
+        List<Artikel> filtered = filter(f);
 
+        Artikel[] result = filtered.toArray(new Artikel[filtered.size()]);
+
+        sort(c, result);
+
+        return result;
     }
 
-    Artikel[] filterAll (){
+    Artikel[] filterAll() {
 
     }
 
     BiPredicate<Artikel, Artikel> sortKategorie = (t, u) -> {
         int compare = t.getArtikelKategorie().compareToIgnoreCase(u.getArtikelKategorie());
-        if (compare < 0){
+        if (compare < 0) {
             return false;
-        }else{
+        } else {
             return true;
         }
     };
 
     BiPredicate<Artikel, Artikel> sortBestand = (t, u) -> {
-        if (t.getAnzahl() < u.getAnzahl()){
+        if (t.getAnzahl() < u.getAnzahl()) {
             return false;
-        }else{
+        } else {
             return true;
         }
     };
 
     BiPredicate<Artikel, Artikel> sortPreis = (t, u) -> {
-        if (t.getArtikelPreis() < u.getArtikelPreis()){
+        if (t.getArtikelPreis() < u.getArtikelPreis()) {
             return false;
-        }else{
+        } else {
             return true;
         }
     };
