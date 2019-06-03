@@ -289,9 +289,22 @@ public class Lager {
 
         return result;
     }
+    /**
+     * Filtert das Lager nach dem uebergebenen Filterkriterien
+     * @param filterKrit Filterkriterien als Predicate-Array
+     * @return Arraylist mit den Artikeln, die den Kriterien entsprechen
+     */
+    List<Artikel> filterAll(Predicate<Artikel>[] filterKrit) {
+        List<Artikel> result = new ArrayList<Artikel>();
 
-    Artikel[] filterAll() {
-
+        for (int j=0; j<=filterKrit.length; j++) {
+            for (int i = 0; i < lager.length; i++) {
+                if (filterKrit[j].test(lager[i])) {
+                    result.add(lager[i]);
+                }
+            }
+        }
+        return result;
     }
 
     /**
