@@ -189,6 +189,11 @@ public class Lager {
 
     //<------------------- HIER FÄNGT UEBUNG 18 AN (KANN SPÄTER ENTFERNT WERDEN --------------------------------------->
 
+    /**
+     * getSortet Sortiert das Lager nach einem uebergebenen Kriterium
+     * @param suchKriterium Kriterium als BiPredicate
+     * @return Sortiertes Lager
+     */
     private Artikel[] getSorted(BiPredicate<Artikel, Artikel> suchKriterium) {
         Artikel[] lagerKopie = lager.clone();
 
@@ -197,6 +202,11 @@ public class Lager {
         return lagerKopie;
     }
 
+    /**
+     * Fuehrt die Sortierung durch
+     * @param suchKriterium Kriterium
+     * @param tmp Array, sortiertes Lager
+     */
     private void sort(BiPredicate<Artikel, Artikel> suchKriterium, Artikel[] tmp) {
         for (int i = tmp.length; i > 0; i--) {
 
@@ -221,7 +231,11 @@ public class Lager {
         lager[j] = tmp;
     }
 
-
+    /**
+     * Filtert das Lager nach dem uebergebenen Filterkriterium
+     * @param filterKrit Filterkriterium als Predicate
+     * @return Arraylist mit den Artikeln, die den Kriterien entsprechen
+     */
     public List<Artikel> filter(Predicate<Artikel> filterKrit)
     {
         List<Artikel> result = new ArrayList<Artikel>();
@@ -236,12 +250,21 @@ public class Lager {
         return result;
     }
 
+    /**
+     * Wendet aenderungen auf alle Artikel im Lager an
+     * @param input Aenderung als Consumer
+     */
     void applyToArticles(Consumer<Artikel> input) {
         for (int i = 0; i <= lager.length; i++) {
             input.accept(lager[i]);
         }
     }
 
+    /**
+     * Wendet aenderung auf ausgewaehlte Artikel an
+     * @param f Filterkriterium
+     * @param c Aenderung
+     */
     public void applyToSomeArticles(Predicate<Artikel> f, Consumer<Artikel> c)
     {
         for ( Artikel a : filter(f) )
@@ -250,6 +273,12 @@ public class Lager {
         }
     }
 
+    /**
+     * Gibt eine sortierte Liste der Artikel zurueckgibt, welche ein bestimmtes Suchkriterium erfuellen zurueck
+     * @param f Suchkriterium
+     * @param c Sortierkriterium
+     * @return
+     */
     public Artikel[] getArticles(Predicate<Artikel> f, BiPredicate<Artikel, Artikel> c)
     {
         List<Artikel> filtered = filter(f);
@@ -265,15 +294,20 @@ public class Lager {
 
     }
 
+    /**
+     * Sortiert Lager nach Kategorie
+     */
     BiPredicate<Artikel, Artikel> sortKategorie = (t, u) -> {
-        int compare = t.getArtikelKategorie().compareToIgnoreCase(u.getArtikelKategorie());
-        if (compare < 0) {
+        int compare = t.getClass().getName().compareToIgnoreCase(u.getClass().getName());
+        if (compare < 0){
             return false;
         } else {
             return true;
         }
     };
-
+    /**
+     * Sortiert Lager nach Bestand
+     */
     BiPredicate<Artikel, Artikel> sortBestand = (t, u) -> {
         if (t.getAnzahl() < u.getAnzahl()) {
             return false;
@@ -281,7 +315,9 @@ public class Lager {
             return true;
         }
     };
-
+    /**
+     * Sortiert Lager nach Preis
+     */
     BiPredicate<Artikel, Artikel> sortPreis = (t, u) -> {
         if (t.getArtikelPreis() < u.getArtikelPreis()) {
             return false;
@@ -289,10 +325,18 @@ public class Lager {
             return true;
         }
     };
-
+    /**
+     * Wendet 10Prozent Rabatt auf Artikel an
+     */
     Consumer<Artikel> saleTen = t -> t.setPreis(t.getArtikelPreis() + (t.getArtikelPreis() * 0.1));
 
+    /**
+     * Added suffix Angebot zu Artikel
+     */
     Consumer<Artikel> suffixAngebot = t -> t.setBezeichnung("(Sonderangebot)" + t.getBeschreibung());
 
+    /**
+     * Added suffix und Reduziert
+     */
     Consumer<Artikel> saleAndSufffix = t -> saleTen.andThen(suffixAngebot);
 }

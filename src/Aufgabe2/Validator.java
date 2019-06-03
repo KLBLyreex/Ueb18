@@ -2,6 +2,9 @@ package Aufgabe2;
 
 /**
  * Statische Klasse zum Prüfen von Bedingungen
+ *
+ * @author Aaron Betzholz / Jan Ehrhardt
+ * @version 03.06.2019
  */
 public class Validator {
 

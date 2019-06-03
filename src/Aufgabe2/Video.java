@@ -1,7 +1,7 @@
 package Aufgabe2;
 
 /**
- * @author Jan Ehrhardt / Luca Schneider
+ * @author Jan Ehrhardt / Aaron Betzholz
  * @version 22.01.2019
  */
 public class Video extends Artikel{
@@ -11,7 +11,7 @@ public class Video extends Artikel{
 
     public Video(int artikelNummer, String artikelBezeichnung, double artikelPreis, int artikelAnzahl, String titel,
                  int dauer, int erscheinungsjahr){
-        super(artikelNummer, artikelBezeichnung, artikelPreis, artikelAnzahl);
+        super(artikelNummer, artikelBezeichnung,artikelPreis, artikelAnzahl);
         this.titel = titel;
         this.dauer = dauer;
         this.erscheinungsjahr = erscheinungsjahr;

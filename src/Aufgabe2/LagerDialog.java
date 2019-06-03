@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Die Klasse LagerDialog ist das Interface zwsichen dem User und der Klasse Lager.
  *
- * @author Jan Ehrhardt / Luca Schneider
+ * @author Jan Ehrhardt / Aaron Betzholz
  * @version 22.01.2019
  */
 public class LagerDialog {

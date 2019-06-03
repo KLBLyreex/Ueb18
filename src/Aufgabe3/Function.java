@@ -3,6 +3,9 @@ package Aufgabe3;
 /**
  * Klasse Function zur Ausfuerung verschiedener Funktionen mit Hilfe des Interfaces MyFunktion, auf verschiedene weisen
  * implementiert.
+ *
+ * @author Aaron Betzholz / Jan Ehrhardt
+ * @version 03.06.2019
  */
 public class Function {
 

@@ -1,7 +1,7 @@
 package Aufgabe2;
 
 /**
- * @author Jan Ehrhardt / Luca Schneider
+ * @author Jan Ehrhardt / Aaron Betzholz
  * @version 22.01.2019
  */
 public class Buch extends Artikel{
@@ -12,7 +12,7 @@ public class Buch extends Artikel{
 
     public Buch (int artikelNummer, String artikelBezeichnung, double artikelPreis, int artikelAnzahl, String titel,
                  String autor, String verlag){
-        super(artikelNummer, artikelBezeichnung, artikelPreis, artikelAnzahl);
+        super(artikelNummer, artikelBezeichnung,artikelPreis, artikelAnzahl);
         this.titel = titel;
         this.autor = autor;
         this.verlag = verlag;

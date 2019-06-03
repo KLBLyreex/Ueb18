@@ -2,6 +2,9 @@ package Aufgabe3;
 
 /**
  * Berchnung der Fakultaet als Top-Level-Klasse
+ *
+ * @author Aaron Betzholz / Jan Ehrhardt
+ * @version 03.06.2019
  */
 public class FakultaetKlasse{
     /**

@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Die Klasse ArtikelTest ist eine Dialog Klasse, die dem Nutzer erlaubt, einen Artikel zu verwalten.
  *
- * @author Jan Ehrhardt / Luca Schneider
+ * @author Jan Ehrhardt / Aaron Betzholz
  * @version 22.01.2019
  */
 public class ArtikelDialog

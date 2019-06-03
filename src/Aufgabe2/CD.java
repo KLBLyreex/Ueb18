@@ -1,7 +1,7 @@
 package Aufgabe2;
 
 /**
- * @author Jan Ehrhardt / Luca Schneider
+ * @author Jan Ehrhardt / Aaron Betzholz
  * @version 22.01.2019
  */
 public class CD extends Artikel {
