@@ -234,7 +234,19 @@ public class Lager {
         }
     }
 
-    void applyToSomeArticles (Consumer<Artikel> input){
+    void applyToSomeArticles (Consumer<Artikel> input, BiPredicate<Artikel, Artikel> filter){
+        for (int i=0; i<= lager.length; i++){
+            if (filter.test(lager[i], t)) {
+                input.accept(lager[i]);
+            }
+        }
+    }
+
+    Artikel[] getArticles (){
+
+    }
+
+    Artikel[] filterAll (){
 
     }
 
