@@ -357,4 +357,5 @@ public class Lager {
      * Added suffix und Reduziert
      */
     static Consumer<Artikel> saleAndSufffix = t -> suffixAngebot.andThen(saleTen);
+    //TODO saleandSuffix funktioniert nicht
 }
