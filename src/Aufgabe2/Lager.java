@@ -194,12 +194,12 @@ public class Lager {
      * @param suchKriterium Kriterium als BiPredicate
      * @return Sortiertes Lager
      */
-    private Artikel[] getSorted(BiPredicate<Artikel, Artikel> suchKriterium) {
+    public void getSorted(BiPredicate<Artikel, Artikel> suchKriterium) {
         Artikel[] lagerKopie = lager.clone();
 
         sort(suchKriterium, lagerKopie);
 
-        return lagerKopie;
+        lager = lagerKopie;
     }
 
     /**
@@ -208,15 +208,15 @@ public class Lager {
      * @param tmp Array, sortiertes Lager
      */
     private void sort(BiPredicate<Artikel, Artikel> suchKriterium, Artikel[] tmp) {
-        for (int i = tmp.length; i > 0; i--) {
-
-            for (int j = 0; j < tmp.length - 1; j++) {
+        for (int i = zeiger-1; i > 0; i--) {
+            for (int j = 0; j < zeiger; j++) {
                 if (suchKriterium.test(tmp[i], tmp[j])) {
                     swap(i, j, tmp);
                 }
             }
         }
     }
+    //TODO Sortierung funktioniert nicht ohne Fehler!
 
     /**
      * Funktion zum Tauschen der Position
@@ -240,7 +240,7 @@ public class Lager {
     {
         List<Artikel> result = new ArrayList<Artikel>();
 
-        for (int i=0; i<lager.length; i++)
+        for (int i=0; i<zeiger; i++)
         {
             if ( filterKrit.test(lager[i]) )
             {
@@ -255,7 +255,7 @@ public class Lager {
      * @param input Aenderung als Consumer
      */
     void applyToArticles(Consumer<Artikel> input) {
-        for (int i = 0; i <= lager.length; i++) {
+        for (int i = 0; i < zeiger; i++) {
             input.accept(lager[i]);
         }
     }
@@ -298,7 +298,7 @@ public class Lager {
         List<Artikel> result = new ArrayList<Artikel>();
 
         for (int j=0; j<=filterKrit.length; j++) {
-            for (int i = 0; i < lager.length; i++) {
+            for (int i = 0; i < zeiger; i++) {
                 if (filterKrit[j].test(lager[i])) {
                     result.add(lager[i]);
                 }
@@ -306,6 +306,8 @@ public class Lager {
         }
         return result;
     }
+
+    //TODO filterAll Testen
 
     /**
      * Sortiert Lager nach Kategorie
@@ -321,13 +323,16 @@ public class Lager {
     /**
      * Sortiert Lager nach Bestand
      */
-    BiPredicate<Artikel, Artikel> sortBestand = (t, u) -> {
+    static BiPredicate<Artikel, Artikel> sortBestand = (t, u) -> {
         if (t.getAnzahl() < u.getAnzahl()) {
             return false;
         } else {
             return true;
         }
     };
+
+    //TODO Funktionen nur auf Artikel anwendbar und nicht auf CD/Buch/Video!
+
     /**
      * Sortiert Lager nach Preis
      */
@@ -341,15 +346,15 @@ public class Lager {
     /**
      * Wendet 10Prozent Rabatt auf Artikel an
      */
-    Consumer<Artikel> saleTen = t -> t.setPreis(t.getArtikelPreis() + (t.getArtikelPreis() * 0.1));
+    static Consumer<Artikel> saleTen = t -> t.setPreis(t.getArtikelPreis() + (t.getArtikelPreis() * 0.1));
 
     /**
      * Added suffix Angebot zu Artikel
      */
-    Consumer<Artikel> suffixAngebot = t -> t.setBezeichnung("(Sonderangebot)" + t.getBeschreibung());
+    static Consumer<Artikel> suffixAngebot = t -> t.setBezeichnung("(Sonderangebot)" + t.getBeschreibung());
 
     /**
      * Added suffix und Reduziert
      */
-    Consumer<Artikel> saleAndSufffix = t -> saleTen.andThen(suffixAngebot);
+    static Consumer<Artikel> saleAndSufffix = t -> suffixAngebot.andThen(saleTen);
 }
