@@ -44,8 +44,7 @@ public class LagerTest {
         store.applyToSomeArticles(filterCD, erhoehenTen);
         store.applyToSomeArticles(filterAutor, saleFuenf);
         System.out.println(store.doAusgabe());
-        System.out.println(store.getSorted(sortAutor);
-        //TODO FIX BUCH TO ARTIKEL
+        store.getSorted(sortAutor); // void methode deswegen kein Print out
     }
 
     //Aufgabe (h)i)
@@ -74,8 +73,10 @@ public class LagerTest {
     //TODO AUFGABE H iv, Kombination aus hi und hii
 
     //Aufgabe (h)v)
-    static BiPredicate<Buch, Buch> sortAutor = (t, u) -> {
-        int compare = t.getAutor().compareToIgnoreCase(u.getAutor());
+    static BiPredicate<Artikel, Artikel> sortAutor = (t, u) -> {
+        Buch b = (Buch)t;
+        Buch b2 = (Buch)u;
+        int compare = b.getAutor().compareToIgnoreCase(b2.getAutor());
         if (compare < 0) {
             return false;
         } else {

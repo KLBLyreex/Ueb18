@@ -208,15 +208,15 @@ public class Lager {
      * @param tmp Array, sortiertes Lager
      */
     private void sort(BiPredicate<Artikel, Artikel> suchKriterium, Artikel[] tmp) {
-        for (int i = zeiger-1; i > 0; i--) {
-            for (int j = 0; j < zeiger; j++) {
-                if (suchKriterium.test(tmp[i], tmp[j])) {
-                    swap(i, j, tmp);
+        for (int i = tmp.length; i > 0; i--) {
+            for (int j = 0; j < tmp.length; j++) {
+                if (suchKriterium.test(tmp[i], tmp[j+1])) {
+                    swap(j, j+1, tmp);
                 }
             }
         }
     }
-    //TODO Sortierung funktioniert nicht ohne Fehler!
+    //TODO Sortierung funktioniert nicht ohne Fehler! -> Sollte jetzt gehen?
 
     /**
      * Funktion zum Tauschen der Position
