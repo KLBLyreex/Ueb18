@@ -11,7 +11,7 @@ import java.util.function.Predicate;
  * @version 03.05.2019
  */
 public class LagerTest {
-    private Lager store = new Lager(30, "HTW Saar");
+    private Lager store = new Lager(21, "HTW Saar");
 
     public static void main(String[] args) {
         new LagerTest().test();
