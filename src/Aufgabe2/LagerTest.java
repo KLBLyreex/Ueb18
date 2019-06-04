@@ -61,8 +61,8 @@ public class LagerTest {
 
     //Aufgabe (h)iii)
     static Predicate<Artikel> filterAutor = t -> {
-        Buch b = (Buch) t;
-        return b.getAutor().equalsIgnoreCase("Autor");
+        //Buch b = (Buch) t;
+        return t.getBeschreibung().equals("Autor");
     };
 
 
