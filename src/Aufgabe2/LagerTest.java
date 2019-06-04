@@ -12,6 +12,7 @@ import java.util.function.Predicate;
  */
 public class LagerTest {
     private Lager store = new Lager(21, "HTW Saar");
+    private Predicate[] filterAllKriterien = {filterCD, filterBestandZwei, filterPreis};
 
     public static void main(String[] args) {
         new LagerTest().test();
@@ -40,11 +41,15 @@ public class LagerTest {
         store.addArtikel(new Buch(1019, "Bucheins", 59.25, 185, "Bucheins", "Autor", "SES"));
         store.addArtikel(new Artikel(1020, "Pfirsisch", 2.03, 54));
 
+
         store.applyToSomeArticles(filterBestandZwei, saleFuenf);
         store.applyToSomeArticles(filterCD, erhoehenTen);
-        store.applyToSomeArticles(filterAutor, saleFuenf);
+      //  store.applyToSomeArticles(filterAutor, saleFuenf);
+        store.applyToArticles(Lager.saleAndSufffix);
+      //  store.getSorted(sortAutor);
         System.out.println(store.doAusgabe());
-        store.getSorted(sortAutor); // void methode deswegen kein Print out
+        System.out.println(store.filterAll(filterAllKriterien));
+
     }
 
     //Aufgabe (h)i)
@@ -65,6 +70,7 @@ public class LagerTest {
         return b.getAutor().equalsIgnoreCase("Autor");
     };
 
+     //TODO FIX BUCH TO ARTIKEL CAST
 
     //Aufgabe (h)iv)
     /**
@@ -73,17 +79,19 @@ public class LagerTest {
     //TODO AUFGABE H iv, Kombination aus hi und hii
 
     //Aufgabe (h)v)
-    static BiPredicate<Artikel, Artikel> sortAutor = (t, u) -> {
-        Buch b = (Buch)t;
-        Buch b2 = (Buch)u;
-        int compare = b.getAutor().compareToIgnoreCase(b2.getAutor());
-        if (compare < 0) {
-            return false;
-        } else {
-            return true;
-        }
-    };
+//    static BiPredicate<Artikel, Artikel> sortAutor = (t, u) -> {
+//        Buch b = (Buch)t;
+//        Buch b2 = (Buch)u;
+//        int compare = b.getAutor().compareToIgnoreCase(b2.getAutor());
+//        if (compare < 0) {
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    };
 
     //Aufgabe (h)vi)
-    //TODO AUFGABE (H)vi)
+    static Predicate<Artikel> filterPreis = t -> {
+        return t.getArtikelPreis() <= 50.00;
+    };
 }

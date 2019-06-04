@@ -208,10 +208,10 @@ public class Lager {
      * @param tmp Array, sortiertes Lager
      */
     private void sort(BiPredicate<Artikel, Artikel> suchKriterium, Artikel[] tmp) {
-        for (int i = tmp.length; i > 0; i--) {
-            for (int j = 0; j < tmp.length; j++) {
-                if (suchKriterium.test(tmp[i], tmp[j+1])) {
-                    swap(j, j+1, tmp);
+        for (int i = zeiger-1; i > 0; i--) {
+            for (int j = 0; j < zeiger; j++) {
+                if (suchKriterium.test(tmp[i], tmp[j])) {
+                    swap(j, j, tmp);
                 }
             }
         }
@@ -297,7 +297,7 @@ public class Lager {
     List<Artikel> filterAll(Predicate<Artikel>[] filterKrit) {
         List<Artikel> result = new ArrayList<Artikel>();
 
-        for (int j=0; j<=filterKrit.length; j++) {
+        for (int j=0; j<filterKrit.length; j++) {
             for (int i = 0; i < zeiger; i++) {
                 if (filterKrit[j].test(lager[i])) {
                     result.add(lager[i]);
@@ -306,8 +306,6 @@ public class Lager {
         }
         return result;
     }
-
-    //TODO filterAll Testen
 
     /**
      * Sortiert Lager nach Kategorie
@@ -354,6 +352,8 @@ public class Lager {
     /**
      * Added suffix und Reduziert
      */
-    //static Consumer<Artikel> saleAndSufffix = t -> suffixAngebot.andThen(saleTen);
-    //TODO saleandSuffix funktioniert nicht
+    static Consumer<Artikel> saleAndSufffix = t -> {
+        saleTen.accept(t);
+        suffixAngebot.accept(t);
+    };
 }
