@@ -4,7 +4,7 @@ package Aufgabe2;
  * @author Jan Ehrhardt / Aaron Betzholz
  * @version 22.01.2019
  */
-public class Buch extends Artikel{
+public class Buch extends Artikel {
 
     private String titel;
     private String autor;

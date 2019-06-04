@@ -331,8 +331,6 @@ public class Lager {
         }
     };
 
-    //TODO Funktionen nur auf Artikel anwendbar und nicht auf CD/Buch/Video!
-
     /**
      * Sortiert Lager nach Preis
      */
@@ -346,16 +344,16 @@ public class Lager {
     /**
      * Wendet 10Prozent Rabatt auf Artikel an
      */
-    static Consumer<Artikel> saleTen = t -> t.setPreis(t.getArtikelPreis() + (t.getArtikelPreis() * 0.1));
+    static Consumer<Artikel> saleTen = t -> t.setPreis(t.getArtikelPreis() - (t.getArtikelPreis() * 0.1));
 
     /**
      * Added suffix Angebot zu Artikel
      */
-    static Consumer<Artikel> suffixAngebot = t -> t.setBezeichnung("(Sonderangebot)" + t.getBeschreibung());
+    static Consumer<Artikel> suffixAngebot = (Artikel t) -> t.setBezeichnung("(Sonderangebot)" + t.getBeschreibung());
 
     /**
      * Added suffix und Reduziert
      */
-    static Consumer<Artikel> saleAndSufffix = t -> suffixAngebot.andThen(saleTen);
+    //static Consumer<Artikel> saleAndSufffix = t -> suffixAngebot.andThen(saleTen);
     //TODO saleandSuffix funktioniert nicht
 }

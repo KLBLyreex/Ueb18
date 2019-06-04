@@ -6,7 +6,7 @@ package Aufgabe2;
  * @author Jan Ehrhardt / Aaron Betzholz
  * @version 27.05.2019
  */
-public class Artikel{
+public class Artikel {
     private int artikelNummer;
     private String artikelBezeichnung;
     private int artikelAnzahl;
@@ -82,7 +82,7 @@ public class Artikel{
     }
 
     public String toString(){
-        return artikelNummer + "\t" + getBeschreibung() + "\t" + artikelPreis + "\t" + artikelAnzahl + "\t" +
+        return artikelNummer + "\t" + artikelBezeichnung + "\t" + artikelPreis + "\t" + artikelAnzahl + "\t" +
                 (artikelAnzahl*artikelPreis);
     }
 }
