@@ -191,6 +191,7 @@ public class Lager {
 
     /**
      * getSortet Sortiert das Lager nach einem uebergebenen Kriterium
+     *
      * @param suchKriterium Kriterium als BiPredicate
      * @return Sortiertes Lager
      */
@@ -211,12 +212,12 @@ public class Lager {
         for (int i = zeiger-1; i > 0; i--) {
             for (int j = 0; j < zeiger; j++) {
                 if (suchKriterium.test(tmp[i], tmp[j])) {
-                    swap(j, j, tmp);
+                    swap(i, j, tmp);
                 }
             }
         }
     }
-    //TODO Sortierung funktioniert nicht ohne Fehler! -> Sollte jetzt gehen?
+    //TODO Sortierung funktioniert nicht ohne Fehler!
 
     /**
      * Funktion zum Tauschen der Position
@@ -233,17 +234,15 @@ public class Lager {
 
     /**
      * Filtert das Lager nach dem uebergebenen Filterkriterium
+     *
      * @param filterKrit Filterkriterium als Predicate
      * @return Arraylist mit den Artikeln, die den Kriterien entsprechen
      */
-    public List<Artikel> filter(Predicate<Artikel> filterKrit)
-    {
+    public List<Artikel> filter(Predicate<Artikel> filterKrit) {
         List<Artikel> result = new ArrayList<Artikel>();
 
-        for (int i=0; i<zeiger; i++)
-        {
-            if ( filterKrit.test(lager[i]) )
-            {
+        for (int i = 0; i < zeiger; i++) {
+            if (filterKrit.test(lager[i])) {
                 result.add(lager[i]);
             }
         }
@@ -252,6 +251,7 @@ public class Lager {
 
     /**
      * Wendet aenderungen auf alle Artikel im Lager an
+     *
      * @param input Aenderung als Consumer
      */
     void applyToArticles(Consumer<Artikel> input) {
@@ -262,25 +262,24 @@ public class Lager {
 
     /**
      * Wendet aenderung auf ausgewaehlte Artikel an
+     *
      * @param f Filterkriterium
      * @param c Aenderung
      */
-    public void applyToSomeArticles(Predicate<Artikel> f, Consumer<Artikel> c)
-    {
-        for ( Artikel a : filter(f) )
-        {
+    public void applyToSomeArticles(Predicate<Artikel> f, Consumer<Artikel> c) {
+        for (Artikel a : filter(f)) {
             c.accept(a);
         }
     }
 
     /**
      * Gibt eine sortierte Liste der Artikel zurueckgibt, welche ein bestimmtes Suchkriterium erfuellen zurueck
+     *
      * @param f Suchkriterium
      * @param c Sortierkriterium
      * @return
      */
-    public Artikel[] getArticles(Predicate<Artikel> f, BiPredicate<Artikel, Artikel> c)
-    {
+    public Artikel[] getArticles(Predicate<Artikel> f, BiPredicate<Artikel, Artikel> c) {
         List<Artikel> filtered = filter(f);
 
         Artikel[] result = filtered.toArray(new Artikel[filtered.size()]);
@@ -289,8 +288,10 @@ public class Lager {
 
         return result;
     }
+
     /**
      * Filtert das Lager nach dem uebergebenen Filterkriterien
+     *
      * @param filterKrit Filterkriterien als Predicate-Array
      * @return Arraylist mit den Artikeln, die den Kriterien entsprechen
      */
@@ -312,7 +313,7 @@ public class Lager {
      */
     BiPredicate<Artikel, Artikel> sortKategorie = (t, u) -> {
         int compare = t.getClass().getName().compareToIgnoreCase(u.getClass().getName());
-        if (compare < 0){
+        if (compare < 0) {
             return false;
         } else {
             return true;
